@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHERINGwithU</title>
+    <link rel="stylesheet" href="city.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://kit.fontawesome.com/d02d3770f5.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+        </label>
+        <img src="websitelogo.png">
+        <ul>
+            <li><a class="active" href="../home.html" id="home">Home</a></li>
+            <li><a href="../hourlyForecast/hourforecast.html">Hour Forecast</a></li>
+            <li><a href="../radarmap/map.html">Radar</a></li>
+            <li><a href="../news/news.html">News</a></li>
+            <li><a href="../home/about.html">About Us</a></li>
+            <li>
+                <input type="text" id="city-input" placeholder="Enter City Name">
+                <button type="button" id="getWeatherButton">Search</button>
+            </li>
+            <li><a href="login/login2.html">Login</a></li>
+
+        </ul>
+    </nav>
+   
+    <div class="Main">
+        
+        <div class="main2">
+            <div class="weather2">
+                <div class="info2">
+                    <img class="infoimg2" src="https://cdn-icons-png.flaticon.com/128/1163/1163657.png"
+                        alt="Weather Icon">
+                    <div class="info2-2">
+                        <h1 class="temp2">--°C</h1>
+                        <h2 class="city2">---------</h2>
+                    </div>
+                </div>
+                <div class="details2">
+                    <div class="col2">
+                        <div>
+                            <img src="https://cdn-icons-png.flaticon.com/128/4148/4148460.png" alt="Humidity Icon">
+                            <p class="value hum">--%</p>
+                            <p class="text">Humidity</p>
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div>
+                            <img src="https://cdn-icons-png.flaticon.com/128/5532/5532989.png" alt="Wind Speed Icon">
+                            <p class="value wind">--- km/h</p>
+                            <p class="text">Wind Speed</p>
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div>
+                            <img src="https://cdn-icons-png.flaticon.com/128/3793/3793957.png" alt="Feels Like Icon">
+                            <p class="value feels-like">Value</p>
+                            <p class="text">Feels Like</p>
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div>
+                            <img src="https://cdn-icons-png.flaticon.com/128/10660/10660818.png" alt="Visibility Icon">
+                            <p class="value visibility">Value</p>
+                            <p class="text">Visibility</p>
+                        </div>
+                    </div>
+                    <div class="col2">
+                        <div>
+                            <img src="https://cdn-icons-png.flaticon.com/128/11129/11129079.png" alt="Pressure Icon">
+                            <p class="value pressure">Value</p>
+                            <p class="text">Pressure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mapCity" class="map"></div>
+        </div>
+    </div>
+    <script src="city.js"></script>
+</body>
+
+</html>

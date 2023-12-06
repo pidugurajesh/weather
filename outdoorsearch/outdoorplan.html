@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather-based Outdoor Activity Suggestion</title>
+    <link rel="stylesheet" href="outdoorplan.css">
+</head>
+<body>
+   
+    <div id="container">
+    <div class="search-bar-active">
+        <input type="text" id="locationInput" placeholder="Search...">
+    
+        <button id="getWeatherButton1">Search</button><br><br>
+        <div class="content-to-hide" style="display: none;"> <!-- Initially hide this content -->
+            <center><b><div id="locationDisplay" class="display location" style="font-family:times new roman"></div></b></center><br>
+        </div>
+        <div class="parent">
+            <div class="weather-content">
+                <div id="weatherInfo"></div>
+                <div id="weather-container"></div>
+                <div class="image-container">
+                    <div id="weather-container"></div>
+                </div>
+            </div>&nbsp;&nbsp;&nbsp;
+
+            <div id="container1"> <!-- Initially hide this content -->
+                <div id="activitySuggestion" class="suggestion-box activity-suggestion"></div><br>
+                <div id="carrySuggestions" class="suggestion-box carry-suggestion"></div><br>
+                <div id="clothingSuggestions" class="suggestion-box clothing-suggestion"></div><br>
+            </div>
+        </div>
+    </div>
+   </div>
+    <script src="outdoorplan.js"></script>
+    
+</body>
+</html>

@@ -1,0 +1,51 @@
+/* Reset some default styles for better cross-browser consistency */
+body,
+div,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Times New Roman', sans-serif;
+  background-color: #cbc9c9aa;
+}
+
+.weather-container {
+  width: 400px;
+  height: 230px;
+  margin: 50px auto;
+  background-color: #beb9b9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.weather-container div {
+  margin-bottom: 20px;
+}
+
+#temperature {
+  font-size: 30px;
+  font-weight: bold;
+  color: #333;
+}
+
+#condition {
+  font-size: 18px;
+  color: #555;
+}
+
+.suggestions {
+  background-color: #994343;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+#suggestions {
+  font-size: 16px;
+  color: #fefefe;
+}
+
+

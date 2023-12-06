@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHERINGwithU</title>
+    <!-- Add this script tag to include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d02d3770f5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+   <style>
+       #forecast {
+           width: 100%;
+           max-width: 700px;
+           background-color: #fff;
+           border-radius: 10px;
+           padding: 10px;
+           box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+           margin-left: 50px;
+           justify-content: center;
+           align-items: center;
+       }
+       .day {
+           margin-bottom: 20px;
+           padding-bottom: 10px;
+           border-bottom: 1px solid #ddd;
+       }
+       .day-header {
+           font-size: 1rem;
+           font-weight: bold;
+           margin-bottom: 5px;
+           color: #333;
+       }
+       .hourly-list {
+           display: flex;
+           overflow-x: auto;
+           gap: 10px;
+           align-items: center;
+       }
+       .hourly-item {
+           flex: 0 0 auto;
+           text-align: center;
+       }
+       .hourly-item p {
+           margin: 0;
+           padding: 0;
+           font-size: 0.8rem;
+       }
+       .weather-icon {
+           width: 30px;
+           height: 30px;
+           margin-bottom: 5px;
+       }
+       canvas {
+           max-height: 120px;
+           margin-top: 10px;
+       }
+       #forecast {
+    width: 100%;
+    max-width: 700px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+    margin-right: auto; /* Center the container */
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (min-width: 768px) {
+    /* Adjust for screens wider than 768px (952px and 1252px) */
+    #forecast {
+        margin-left: 50px; /* Keep the left margin for screens wider than 768px */
+    }
+}
+
+@media only screen and (min-width: 952px) {
+    #forecast {
+        margin-left: auto; /* Reset margin for screens wider than 952px */
+        margin-right: auto;
+    }
+}
+
+@media only screen and (min-width: 1252px) {
+    #forecast {
+        max-width: 1000px; /* Adjust max-width for screens wider than 1252px */
+    }
+}
+
+.day {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.day-header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.hourly-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    align-items: center;
+}
+
+.hourly-item {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.hourly-item p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+.weather-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+canvas {
+    max-height: 120px;
+    margin-top: 10px;
+}
+   </style>
+
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+        </label>
+        <img src="websitelogo.png">
+        <ul>
+            <li><a  href="../home.html" id="home">Home</a></li>
+            <li><a class="active" href="../hourlyForecast/hourforecast.html">Hour Forecast</a></li>
+            <li><a href="../radarmap/map.html">Radar</a></li>
+            <li><a href="../news/news.html">News</a></li>
+            <li><a href="../home/about.html">About Us</a></li>
+            <li>
+                <input type="text" id="city-input" placeholder="Enter City Name">
+                <button type="button" id="getWeatherButton">Search</button>
+            </li>
+            <li><a href="login/login2.html">Login</a></li>
+
+        </ul>
+    </nav>
+    <div id="forecast">
+        <!-- The forecast will be displayed here -->
+    </div>
+
+    <script>
+        const apiKey = 'e3e79c7deb33eb1f1df2253145ae41a5';
+        const baseUrl = 'https://api.openweathermap.org/data/2.5/forecast';
+
+        // Get user's current location
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            const params = {
+                lat: lat,
+                lon: lon,
+                appid: apiKey,
+                units: 'metric',  // Use metric units for Celsius
+            };
+
+            fetch(`${baseUrl}?${new URLSearchParams(params)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const hourlyForecast = data.list;
+
+                    // Group forecasts by day
+                    const groupedByDay = {};
+                    hourlyForecast.forEach(forecast => {
+                        const date = new Date(forecast.dt * 1000);
+                        const day = date.toLocaleDateString('en-US', { weekday: 'long' });
+
+                        if (!groupedByDay[day]) {
+                            groupedByDay[day] = [];
+                        }
+
+                        groupedByDay[day].push({
+                            time: date.toLocaleTimeString(),
+                            temperature: forecast.main.temp,
+                            description: forecast.weather[0].description,
+                            icon: forecast.weather[0].icon,
+                        });
+                    });
+
+                    // Create HTML elements for each day's forecast
+                    const forecastContainer = document.getElementById('forecast');
+                    for (const day in groupedByDay) {
+                        const dayElement = document.createElement('div');
+                        dayElement.classList.add('day');
+
+                        const dayHeader = document.createElement('div');
+                        dayHeader.classList.add('day-header');
+                        dayHeader.textContent = day;
+
+                        const hourlyList = document.createElement('div');
+                        hourlyList.classList.add('hourly-list');
+                        groupedByDay[day].forEach(hourly => {
+                            const hourlyItem = document.createElement('div');
+                            hourlyItem.classList.add('hourly-item');
+                            hourlyItem.innerHTML = `
+                                <img src="http://openweathermap.org/img/w/${hourly.icon}.png" class="weather-icon" alt="Weather Icon">
+                                <p>${hourly.time}</p>
+                                <p>${hourly.temperature} &#8451;</p>
+                                <p>${hourly.description}</p>
+                            `;
+                            hourlyList.appendChild(hourlyItem);
+                        });
+
+                        const chartCanvas = document.createElement('canvas');
+                        dayElement.appendChild(dayHeader);
+                        dayElement.appendChild(hourlyList);
+                        dayElement.appendChild(chartCanvas);
+                        forecastContainer.appendChild(dayElement);
+
+                        drawChart(chartCanvas, groupedByDay[day]);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }, error => {
+            console.error('Error getting location:', error);
+        });
+
+        function drawChart(canvas, hourlyData) {
+            const timeLabels = hourlyData.map(hourly => hourly.time);
+            const temperatureData = hourlyData.map(hourly => hourly.temperature);
+
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: timeLabels,
+                    datasets: [{
+                        label: 'Temperature (°C)',
+                        data: temperatureData,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+        
+
+    
+        
+</body>
+<script>
+    document.getElementById('getWeatherButton').addEventListener('click', function () {
+        const city = document.getElementById('city-input').value;
+        window.location.href = `city.html?city=${encodeURIComponent(city)}`;
+    });
+    document.getElementById('hour').addEventListener('click', function() {
+        // Remove the 'active' class from all list items
+        var listItems = document.querySelectorAll('nav ul li');
+        listItems.forEach(function(item) {
+            item.classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked list item
+        this.parentNode.classList.add('active');
+    });
+</script>
+</html>

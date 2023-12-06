@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHERINGwithU</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d02d3770f5.js" crossorigin="anonymous"></script>
+    <style>        
+* {
+  font-family: normal, sans-serif;
+}
+
+.responsive-container-block {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  overflow: hidden;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.responsive-container-block.bigContainer {
+  padding: 10px;
+  background: linear-gradient(to bottom, #f5f5f5, #a4cdde);
+  position: fixed;
+}
+
+.responsive-container-block.Container {
+  max-width: 800px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 130px;
+  margin-bottom: 200px;
+}
+
+.text-blk.heading {
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 600;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  justify-content: center;
+}
+
+.text-blk.subHeading {
+  text-align: justify;
+  font-size: 18px;
+  line-height: 26px;
+  font-weight: 300;
+  max-width: 800px;
+}
+
+/* Responsive styles */
+@media (max-width: 952px) {
+  .responsive-container-block.Container {
+    max-width: 90%;
+  }
+
+  .text-blk.heading {
+    font-size: 32px;
+    line-height: 36px;
+  }
+
+  .text-blk.subHeading {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
+@media (max-width: 1252px) {
+  .responsive-container-block.Container {
+    max-width: 100%;
+  }
+}
+
+    </style>
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+        </label>
+        <img src="websitelogo.png">
+        <ul>
+            <li><a  href="../home.html" id="home">Home</a></li>
+            <li><a  href="../hourlyForecast/hourforecast.html">Hour Forecast</a></li>
+            <li><a href="../radarmap/map.html">Radar</a></li>
+            <li><a href="../news/news.html">News</a></li>
+            <li><a class="active" href="../home/about.html">About Us</a></li>
+            <li>
+                <input type="text" id="city-input" placeholder="Enter City Name">
+                <button type="button" id="getWeatherButton">Search</button>
+            </li>
+            <li><a href="login/login2.html">Login</a></li>
+
+        </ul>
+    </nav>
+    <div class="responsive-container-block bigContainer">
+        <div class="responsive-container-block Container">
+          <img src="logo2.png" alt="">
+            <p class="text-blk heading">
+            About Us
+          </p><br>
+          <p class="text-blk subHeading">
+            Welcome to our weather forecasting website WEATHERINGwithU! We are a team of students, our mission is to provide accurate and up-to-date information about the weather conditions in your area and beyond. <br><br>
+
+            As students, we may not have the same level of experience as professional meteorologists, 
+            but we are dedicated to learning and improving our forecasting skills. 
+            Our goal is to gain practical experience in the field of weather forecasting while providing good service to the users.
+            We understand that weather plays a crucial role in our daily lives, from planning outdoor activities to ensuring personal safety. 
+            That's why we are committed to delivering accurate and timely forecasts to keep you informed and prepared. <br><br>
+
+            Thank you for choosing this weather forecasting website. We appreciate your support!!!
+            </p>
+          
+      </div>
+</body>
+
+<script>
+    document.getElementById('getWeatherButton').addEventListener('click', function () {
+        const city = document.getElementById('city-input').value;
+        window.location.href = `city.html?city=${encodeURIComponent(city)}`;
+    });
+    document.getElementById('about').addEventListener('click', function() {
+        // Remove the 'active' class from all list items
+        var listItems = document.querySelectorAll('nav ul li');
+        listItems.forEach(function(item) {
+            item.classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked list item
+        this.parentNode.classList.add('active');
+    });
+</script>
+</html>

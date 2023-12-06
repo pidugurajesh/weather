@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHERINGwithU</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="news.css">
+    <script src="https://kit.fontawesome.com/d02d3770f5.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+        </label>
+        <img src="websitelogo.png">
+        <ul>
+            <li><a  href="../home.html" id="home">Home</a></li>
+            <li><a  href="../hourlyForecast/hourforecast.html">Hour Forecast</a></li>
+            <li><a href="../radarmap/map.html">Radar</a></li>
+            <li> <a class="active" href="../news/news.html">News</a></li>
+            <li><a href="../home/about.html">About Us</a></li>
+            <li>
+                <input type="text" id="city-input" placeholder="Enter City Name">
+                <button type="button" id="getWeatherButton">Search</button>
+            </li>
+            <li><a href="login/login2.html">Login</a></li>
+
+        </ul>
+    </nav>
+    <h1 class="h1">Weather-Related News Headlines</h1>
+  <div id="news-container"></div>
+  <script src="news.js"></script>
+</body>
+
+<script>
+    document.getElementById('getWeatherButton').addEventListener('click', function () {
+        const city = document.getElementById('city-input').value;
+        window.location.href = `city.html?city=${encodeURIComponent(city)}`;
+    });
+    document.getElementById('about').addEventListener('click', function() {
+        // Remove the 'active' class from all list items
+        var listItems = document.querySelectorAll('nav ul li');
+        listItems.forEach(function(item) {
+            item.classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked list item
+        this.parentNode.classList.add('active');
+    });
+</script>
+</html>

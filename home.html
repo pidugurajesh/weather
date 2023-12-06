@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHERINGwithU</title>
+    <link rel="stylesheet" href="home/style.css">
+    <link rel="stylesheet" href="home/week.css">
+    <script src="https://kit.fontawesome.com/d02d3770f5.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="home/curr.css"> 
+    <link rel="stylesheet" href="home/sun.css">
+    <link rel="stylesheet" href="home/newshome.css">
+    <link rel="stylesheet" href="outdoor/loc.css">
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> 
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+        </label>
+        <img src="images/websitelogo.png">
+        <ul>
+            <li><a class="active" href="../home.html" id="home">Home</a></li>
+            <li><a href="../hourlyForecast/hourforecast.html">Hour Forecast</a></li>
+            <li><a href="../radarmap/map.html">Radar</a></li>
+            <li><a href="../news/news.html">News</a></li>
+            <li><a href="../home/about.html">About Us</a></li>
+            <li>
+                <input type="text" id="city-input" placeholder="Enter City Name">
+                <button type="button" id="getWeatherButton">Search</button>
+            </li>
+            <li><a href="login/login2.html">Login</a></li>
+
+        </ul>
+    </nav>
+    
+    <div class="Main">
+        <div class="weather">
+            <div class="info">
+                <img class="infoimg" src="https://cdn-icons-png.flaticon.com/128/1163/1163657.png" alt="Weather Icon">
+                <div class="info1">
+                    <h1 class="temp">--°C</h1>
+                    <h2 class="local-area">---------</h2>
+                </div>
+            </div>
+            <div class="weather-details">
+                <div class="col">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/128/4148/4148460.png" alt="Humidity Icon">
+                        <p class="value hum">--%</p>
+                        <p class="text">Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/128/5532/5532989.png" alt="Wind Speed Icon">
+                        <p class="value wind">--- km/h</p>
+                        <p class="text">Wind Speed</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/128/3793/3793957.png" alt="Feels Like Icon">
+                        <p class="value feels-like">Value</p>
+                        <p class="text">Feels Like</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/128/10660/10660818.png" alt="Visibility Icon">
+                        <p class="value visibility">Value</p>
+                        <p class="text">Visibility</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <img src="https://cdn-icons-png.flaticon.com/128/11129/11129079.png" alt="Pressure Icon">
+                        <p class="value pressure">Value</p>
+                        <p class="text">Pressure</p>
+                    </div>
+                </div>
+
+                <!-- Add more columns for other details as needed -->
+             </div>
+         </div>
+        <div id="mapUser" class="map"></div>
+    </div>
+    <script src="home/curr.js"></script>   
+    <div id="week-sun">
+        <div class="future-forecast">
+            <div class="weather-forecast" id="weather-forecast">
+                <div class="weather-forecast-item">
+                    <img src="" alt="weather icon" class="w-icon">
+                    <div class="day">Mon</div>
+                    <div class="temps">Max -25°C</div>
+
+                </div>
+                <div class="weather-forecast-item">
+                    <img src="" alt="weather icon" class="w-icon">
+                    <div class="day">Tue</div>
+                    <div class="temps" style="font-style: 18px;">Max -25°C</div>
+
+                </div>
+                <div class="weather-forecast-item">
+                    <img src="" alt="weather icon" class="w-icon">
+                    <div class="day">Wed</div>
+                    <div class="temps" >Max -25°C</div>
+
+                </div>
+                <div class="weather-forecast-item">
+                    <img src="" alt="weather icon" class="w-icon">
+                    <div class="day">Thu</div>
+                    <div class="temps">Max -25°C</div>
+
+                </div>
+                <div class="weather-forecast-item">
+                    <img src="" alt="weather icon" class="w-icon">
+                    <div class="day">Fri</div>
+                    <div class="temps">Max -25°C</div>
+
+                </div>
+            </div>
+
+        </div>
+        <script src="home/week.js"></script>
+        <div class="hour">
+            <div class="dis-temp-container">
+                <div class="dis-temp morning">
+                    <h1 class="time">Morning</h1>
+                    <div class="max">25°C</div>
+                    <div class="min">25°C</div>
+                    <img class="infoimg" src="https://cdn-icons-png.flaticon.com/128/1163/1163657.png"
+                        alt="Weather Icon">
+                </div>
+                <div class="dis-temp afternoon">
+                    <h1 class="time">Afternoon</h1>
+                    <div class="max">25°C</div>
+                    <div class="min">25°C</div>
+                    <img class="infoimg" src="https://cdn-icons-png.flaticon.com/128/1163/1163657.png"
+                        alt="Weather Icon">
+                </div>
+                <div class="dis-temp evening">
+                    <h1 class="time">Evening</h1>
+                    <div class="max">25°C</div>
+                    <div class="min">25°C</div>
+                    <img class="infoimg" src="https://cdn-icons-png.flaticon.com/128/1163/1163657.png"
+                        alt="Weather Icon">
+                </div>
+                <div class="dis-temp night">
+                    <h1 class="time">Night</h1>
+                    <div class="max">25°C</div>
+                    <div class="min">25°C</div>
+                    <img class="infoimg" src="https://cdn-icons-png.flaticon.com/128/1163/1163657.png"
+                        alt="Weather Icon">
+                </div>
+            </div>
+            <a href="hourlyForecast/hourforecast.html" class="seemore-button">See More</a>
+        </div>
+        <script src="home/homehour.js"> </script>
+
+    </div>
+    <br> 
+    <div class="three">
+        <div class="outdoor">
+            <img class="activity-image" src="https://picsum.photos/300/200" alt="Outdoor Activity Image">
+            <a href="outdoorsearch/outdoorplan.html">Outdoor Activities Suggestions </a>
+        </div>
+        <div class="sunrise-sunset">
+            <p>Sunrise: <span id="sunrise-time"></span></p>
+            <p>Sunset: <span id="sunset-time"></span></p>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+            
+        </div>
+            <script src="home/sun.js"> </script>
+	<div class="weather-container">
+            <div>
+                <p id="temperature"></p>
+                <p id="condition"></p>
+            </div>
+            <div class="suggestions">
+                <p id="suggestions"></p>
+            </div>
+        </div>
+        <script src="outdoor/loc.js"></script>
+    </div>
+    <br>
+    <div style="display: flex; justify-content: space-between; padding: 20px;">
+
+        <div class="bor">
+            <div id="news-container" class="overview-container"></div><br><br>
+            <button id="see-more-button">See More</button>
+        </div>
+        <script src="home/homenews.js">
+
+        </script>
+    </div>
+</body>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    document.getElementById('getWeatherButton').addEventListener('click', function () {
+        const city = document.getElementById('city-input').value;
+        window.location.href = `home/city.html?city=${encodeURIComponent(city)}`;
+    });
+    document.getElementById('home').addEventListener('click', function () {
+        // Remove the 'active' class from all list items
+        var listItems = document.querySelectorAll('nav ul li');
+        listItems.forEach(function (item) {
+            item.classList.remove('active');
+        });
+
+        // Add the 'active' class to the clicked list item
+        this.parentNode.classList.add('active');
+    });
+    
+</script>
+
+</html>

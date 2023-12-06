@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHERINGwithU</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/d02d3770f5.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+        /* Reset some default browser styles */
+       
+      /* Map container styles */
+#map {
+    height: 400px; /* Adjust height as needed */
+    width: 100%;
+}
+
+/* Sidebar styles */
+#sidebar {
+    width: 100%; /* Updated width to be responsive */
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+/* Header styles (time bar) */
+#time-bar {
+    height: 50px;
+    background: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Menu styles */
+#menu {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+/* Customize the menu options (radio buttons and labels) */
+#menu input[type="radio"] {
+    display: none; /* Hide the radio buttons */
+}
+
+#menu label {
+    display: block;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 8px 10px;
+    background: #444; /* Darker background color for menu items */
+    border-radius: 5px;
+    transition: background 0.3s;
+    color: #fff; /* Light text color for better contrast */
+}
+
+#menu label:hover {
+    background: #555; /* Slightly lighter background color on hover */
+}
+
+#menu input[type="radio"]:checked + label {
+    background: #007bff; /* Blue background color for the selected option */
+}
+
+/* Add styles for legend and popups */
+#legend {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.popup-content {
+    max-width: 200px;
+}
+
+@media (min-width: 768px) {
+    /* Adjust styles for tablets (768px and above) */
+    #map {
+        height: 600px; /* Adjust height as needed */
+    }
+
+    #sidebar {
+        width: 300px;
+    }
+}
+
+@media (min-width: 952px) {
+    /* Adjust styles for 952px and above */
+    #sidebar {
+        display: block;
+    }
+}
+
+@media (min-width: 1252px) {
+    /* Adjust styles for 1252px and above */
+    #sidebar {
+        width: 300px; /* Adjust width as needed */
+    }
+}
+
+    </style>
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+        </label>
+        <img src="websitelogo.png">
+        <ul>
+            <li><a  href="../home.html" id="home">Home</a></li>
+            <li><a  href="../hourlyForecast/hourforecast.html">Hour Forecast</a></li>
+            <li><a class="active" href="../radarmap/map.html">Radar</a></li>
+            <li><a href="../news/news.html">News</a></li>
+            <li><a href="../home/about.html">About Us</a></li>
+            <li>
+                <input type="text" id="city-input" placeholder="Enter City Name">
+                <button type="button" id="getWeatherButton">Search</button>
+            </li>
+            <li><a href="login/login2.html">Login</a></li>
+
+        </ul>
+    </nav>
+    <div id="sidebar">
+        <div id="menu">
+            <!-- Menu options go here -->
+        </div>
+    </div>
+    <div id="map"></div>
+    <div id="legend"></div> <!-- To display legends -->
+    
+  
+    <script src="map.js"></script>
+    <script>
+        // Initialize the map
+        var myMap = L.map('map').setView([51.505, -0.09], 6);
+
+        // Create a default OpenStreetMap layer
+        var defaultLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(myMap);
+
+        // Function to add weather layers
+        function addWeatherLayer(layerName) {
+            // Check if the layer exists
+            if (layers[layerName]) {
+                myMap.eachLayer(function (layer) {
+                    if (layer !== defaultLayer) {
+                        myMap.removeLayer(layer);
+                    }
+                });
+                layers[layerName].layer.addTo(myMap);
+                displayLegend(layerName);
+            }
+        }
+
+        // Add user's current location marker (using browser geolocation)
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var userLocation = L.latLng(position.coords.latitude, position.coords.longitude);
+                myMap.setView(userLocation, 10); // You can adjust the zoom level
+                var locationMarker = L.circle(userLocation, { radius: 100, color: 'blue' }).addTo(myMap);
+            });
+        }
+
+        // Create an object to store layers and their data
+        var layers = {
+            Temperature: {
+                layer: L.tileLayer('https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=e3e79c7deb33eb1f1df2253145ae41a5', { maxZoom: 10 }),
+                legend: 'Temperature Scale: -10°C to 40°C',
+            },
+            Clouds: {
+                layer: L.tileLayer('https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=e3e79c7deb33eb1f1df2253145ae41a5', { maxZoom: 10 }),
+                legend: 'Clouds Scale: 0% to 100%',
+            },
+            AirPressure: {
+                layer: L.tileLayer('https://tile.openweathermap.org/map/pressure_new/{z}/{x}/{y}.png?appid=e3e79c7deb33eb1f1df2253145ae41a5', { maxZoom: 10 }),
+                legend: 'Air Pressure Scale: 900 hPa to 1100 hPa',
+            },
+            Precipitation: {
+                layer: L.tileLayer('https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=e3e79c7deb33eb1f1df2253145ae41a5', { maxZoom: 10 }),
+                legend: 'Precipitation Scale: 0 mm to 20 mm',
+                scaleInfo: 'Precipitation Scale Info: 0 mm (Dry) to 20 mm (Heavy Rain)',
+            },
+            WindSpeed: {
+                layer: L.tileLayer('https://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=e3e79c7deb33eb1f1df2253145ae41a5', { maxZoom: 10 }),
+                legend: 'Wind Speed Scale: 0 m/s to 30 m/s',
+                scaleInfo: 'Wind Speed Scale Info: 0 m/s (Calm) to 30 m/s (Storm)',
+            },
+            // Add more layers and legends here
+        };
+
+        // Add a control for switching layers
+        var layerControl = L.control.layers().addTo(myMap);
+
+        // Add legends to the layer control
+        for (var layerName in layers) {
+            if (layers.hasOwnProperty(layerName)) {
+                layerControl.addOverlay(layers[layerName].layer, layerName);
+            }
+        }
+
+        // Function to display the legend for the selected layer
+        function displayLegend(layerName) {
+            var legendContainer = document.getElementById('legend');
+            if (legendContainer) {
+                legendContainer.textContent = layers[layerName].legend;
+            }
+        }
+
+        // Handle menu interactions
+        document.getElementById('menu').addEventListener('click', function (e) {
+            var selectedLayer = e.target.textContent;
+
+            // Check if the clicked element is a label (which contains the radio button input)
+            if (e.target.tagName === 'LABEL') {
+                var radioButton = e.target.querySelector('input[type="radio"]');
+                if (radioButton) {
+                    radioButton.checked = true; // Check the radio button
+                    addWeatherLayer(selectedLayer); // Switch to the selected layer
+                    displayLegend(selectedLayer); // Update the legend
+                }
+            }
+        });
+
+        // Additional Layers: You can add more weather-related layers, like humidity, wind direction, or UV index, to provide comprehensive weather information.
+        layers.Humidity = {
+            layer: L.tileLayer('https://your-humidity-tile-url.com/{z}/{x}/{y}.png', { maxZoom: 10 }),
+            legend: 'Humidity Scale: 0% to 100%',
+        };
+
+        layers.WindDirection = {
+            layer: L.tileLayer('https://your-wind-direction-tile-url.com/{z}/{x}/{y}.png', { maxZoom: 10 }),
+            legend: 'Wind Direction Scale: 0° to 360°',
+        };
+
+        layers.UVIndex = {
+            layer: L.tileLayer('https://your-uv-index-tile-url.com/{z}/{x}/{y}.png', { maxZoom: 10 }),
+            legend: 'UV Index Scale: 0 to 10',
+        };
+
+        // Info Popups: Enable pop-up windows that provide more detailed information about a location when users click on it.
+        var locations = [
+            {
+                lat: 51.505,
+                lng: -0.09,
+                name: "London",
+                description: "Capital of the UK",
+                humidity: 80,
+                windDirection: 270,
+                uvIndex: 5,
+            },
+            // Add more location data here
+        ];
+
+        locations.forEach(function (location) {
+            var marker = L.marker([location.lat, location.lng]).addTo(myMap);
+
+            marker.bindPopup(`
+                <div class="popup-content">
+                    <b>${location.name}</b><br>
+                    ${location.description}<br>
+                    Humidity: ${location.humidity}%<br>
+                    Wind Direction: ${location.windDirection}°<br>
+                    UV Index: ${location.uvIndex}
+                </div>
+            `);
+        });
+    </script>
+    <script>
+        document.getElementById('getWeatherButton').addEventListener('click', function () {
+            const city = document.getElementById('city-input').value;
+            window.location.href = `city.html?city=${encodeURIComponent(city)}`;
+        });
+    </script>
+</body>
+</html>

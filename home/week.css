@@ -1,0 +1,329 @@
+/* Center the forecast container */
+.future-forecast {
+    float: left;
+    min-height: 30vh;
+    margin: 10px;
+    padding: 30px;
+    margin-top: 30px
+    
+}
+
+/* Style each forecast item */
+.weather-forecast-item {
+    background-color: rgb(222, 223, 224);
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    padding: 0px;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: transform 0.2s;
+    width: 120px; 
+    height: 230px;
+    /* Adjust the width for better alignment */
+}
+
+.weather-forecast-item:hover {
+    transform: translateY(-5px);
+}
+
+.w-icon {
+    padding-top: 10px;
+    width: 110px;
+    height: 80px;
+}
+
+.day {
+    font-size: 19px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.temps {
+    font-size: 18px;
+    margin-top: 5px;
+    
+}
+
+/* Flex display for weather forecast items */
+.weather-forecast {
+    display: flex;
+ 
+}
+#week-sun{
+    display: flex;
+    display: flex;
+    justify-content: 0px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.hour {
+  
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-left: 20px;
+    padding-right: 20px;
+ 
+    margin-left: 50px;
+    margin-right: 10px;
+    
+    height: 170px;
+    display: inline-block;
+    width: 700px;
+}
+
+/* Style the location text */
+#location {
+    font-size: 24px;
+    color: #151414;
+    padding: 0px;
+}
+
+/* Style the timeOfDay div containers */
+.dis-temp-container {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+/* Style individual timeOfDay divs */
+.dis-temp {
+    flex: 1;
+    background-color: #e8e2e2;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    margin: 0.5%;
+    height: 230px;
+}
+
+
+/* Add a subtle box shadow and hover effect to the divs */
+.dis-temp:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-5px);
+}
+
+/* Style the timeOfDay title */
+h1.time {
+    font-size: 25px;
+    color: #0e0e0e;
+    padding-top: 10px;
+}
+
+/* Style the temperature elements */
+.max, .min {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #777;
+}
+
+/* Style the weather icon */
+.infoimg {
+    width: 40px;
+    height: 40px;
+}
+
+/* Style the "See More" button inside the .hour container */
+.hour .seemore-button {
+    display: block;
+    text-align: center;
+    background-color: #315e8a;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.hour .seemore-button:hover {
+    background-color: #0056b3;
+}
+/* ... (previous styles) ... */
+
+/* Responsive Styles for 952px */
+@media only screen and (max-width: 952px) {
+    .weather-forecast-item {
+        width: 80px;
+        height: 200px;
+        margin: 5px;
+    }
+
+    .weather-forecast {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .hour {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .temps {
+        font-size: 16px;
+    }
+
+    #week-sun {
+        margin-top: 20px;
+    }
+
+    .dis-temp {
+        height: 150px;
+        margin: 10px 0;
+    }
+
+    h1.time {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .max, .min {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    .infoimg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .seemore-button {
+        font-size: 16px;
+        padding: 8px 15px;
+        margin-top: 10px;
+    }
+}
+
+/* Responsive Styles for 952px */
+@media only screen and (max-width: 952px) {
+    .weather-forecast-item {
+        width: 80px;
+        height: 200px;
+        margin: 5px;
+    }
+
+    .weather-forecast {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .hour {
+        width: 48%;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .temps {
+        font-size: 16px;
+    }
+
+    #week-sun {
+        margin-top: 20px;
+    }
+
+    .dis-temp {
+        height: 150px;
+        margin: 10px 0;
+    }
+
+    h1.time {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .max, .min {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+
+    .infoimg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .seemore-button {
+        font-size: 16px;
+        padding: 8px 15px;
+        margin-top: 10px;
+    }
+     .dis-temp-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .dis-temp {
+        width: 80%; /* Take up 80% of the width */
+        margin: 2% 0; /* Adjust space between items */
+    }
+
+    h1.time {
+        font-size: 18px;
+    }
+
+    .max, .min {
+        font-size: 14px;
+        margin: 6px 0;
+    }
+}
+
+/* Responsive Styles for 1252px */
+@media only screen and (max-width: 1252px) {
+    .weather-forecast-item {
+        width: 100px;
+        height: 230px;
+        margin: 10px;
+    }
+
+    .hour {
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+        text-align: center;
+    }
+
+    #week-sun {
+        margin-top: 20px;
+    }
+
+    .infoimg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .seemore-button {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin-top: 15px;
+    }
+     .dis-temp-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dis-temp {
+        width: 48%; /* Two items per row */
+        margin: 1%; /* Adjust the space between items */
+    }
+
+    h1.time {
+        font-size: 20px;
+    }
+
+    .max, .min {
+        font-size: 16px;
+        margin: 8px 0;
+    }
+}
+
+

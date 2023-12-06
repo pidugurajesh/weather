@@ -1,0 +1,129 @@
+
+.sunrise-sunset {
+    background-color: #dedcdc;
+    border-radius: 10px;
+    padding: 20px;
+    height: 250px;
+    margin-top: 40px;
+    width: 20%;
+    align-items: center;
+    margin-right: 130px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+}
+.outdoor {
+    align-items: left;
+    margin-top: 40px;
+    width: 20%; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-right:  60px; 
+    height: 250px;
+    margin-left: 20px; 
+}
+/* Medium (MD) screens - 952px */
+@media only screen and (max-width: 952px) {
+    .outdoor {
+        display: none; /* Hide the outdoor activity card on screens <= 952px */
+    }
+    .sunrise-sunset{
+        display: none;
+    }
+    .weather-container{
+        display: none;
+    }
+}
+
+/* Large (LG) screens - 1252px */
+@media only screen and (min-width: 953px) and (max-width: 1252px) {
+    .outdoor {
+        display: none; /* Hide the outdoor activity card on screens between 953px and 1252px */
+    }
+    .sunrise-sunset{
+        display: none;
+    }
+    .weather-container{
+        display: none;
+    }
+}
+/* Hover effect for the container */
+.sunrise-sunset:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the sunrise and sunset labels */
+.sunrise-sunset p {
+    font-size: 19px;
+    align-items: baseline;
+}
+
+/* Style the times */
+#sunrise-time,
+#sunset-time {
+    font-size: 26px;
+    font-weight: bold;
+    color: #007BFF; /* Blue color */
+}
+
+/* Add a subtle gradient background */
+
+
+/* Add a subtle border radius for the times */
+#sunrise-time, #sunset-time {
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background */
+}
+
+.sunset-week{
+    display: inline-block;
+    flex-direction: row;
+    margin:20px;
+    padding: auto;
+    
+}
+.three {
+    display: flex;
+    justify-content:normal;   
+   
+}
+
+/* Style for the outdoor activity card */
+
+
+/* Style for the outdoor activity image */
+.activity-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+}
+
+/* Style for the outdoor activity link */
+.outdoor a {
+    display: block;
+    padding: 10px;
+    background-color: #4CAF50; /* Green color, change as needed */
+    color: #fff; /* White text */
+    text-decoration: none;
+    border: none;
+    border-radius: 0 0 10px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+/* Hover effect for the outdoor activity link */
+.outdoor a:hover {
+    background-color: #45a049; /* Darker green on hover, change as needed */
+}
+.activity-button:hover {
+    background-color: #45a049;
+    /* Darker green on hover, change as needed */
+}
